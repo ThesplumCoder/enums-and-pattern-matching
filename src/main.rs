@@ -1,28 +1,29 @@
-#[derive(Debug)]
-enum IpAddress {
-    V4 { address: String, ip_type: IpTypes },
-    V6,
+enum CommonFunctions {
+    Quadratic(f64),
+    Cubic(f64),
+    Exponential(f64),
+    Sine(f64),
 }
 
-#[derive(Debug)]
-enum IpTypes {
-    Loopback,
-    Private,
-    Public,
-    Broadcast,
-}
-
-impl IpAddress {
-    fn whoami(&self) {
-        println!("I'm {:?}", self);
+impl CommonFunctions {
+    fn calculate(&self) -> f64 {
+        match self {
+            CommonFunctions::Quadratic(input) => input.powi(2),
+            CommonFunctions::Cubic(input) => input.powi(3),
+            CommonFunctions::Exponential(input) => input.exp2(),
+            CommonFunctions::Sine(input) => input.sin(),
+        }
     }
 }
 
 fn main() {
-    let myhouse = IpAddress::V4 {
-        address: String::from("221.211.103.093"),
-        ip_type: IpTypes::Public,
-    };
-    println!("Examples of enums running.");
-    myhouse.whoami();
+    let domain: [f64; 5] = [1.0, 2.0, 3.0, 4.0, 5.0];
+
+    for input in domain {
+        println!("x : {input}");
+        println!("x**2 = {}", CommonFunctions::Quadratic(input).calculate());
+        println!("x**3 = {}", CommonFunctions::Cubic(input).calculate());
+        println!("2**x = {}", CommonFunctions::Exponential(input).calculate());
+        println!("sin(x) = {}", CommonFunctions::Sine(input).calculate());
+    }
 }
